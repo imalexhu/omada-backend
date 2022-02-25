@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-// const enums = require("../../enum");
+const enums = require("../../enum");
 
 const ProjectSchema = new mongoose.Schema({
   description: {
     type: String,
+    required : true,
   },
   name: {
     type: String,
