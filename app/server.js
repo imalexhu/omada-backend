@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require('cors');
+const cors = require("cors");
 const app = express();
 const port = process.env.PORT;
 const url = process.env.DB_URL;
@@ -15,8 +15,6 @@ mongoose.connect(
   (error) => console.log(error.message)
 );
 
-
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-  });
-  
+  console.log(`Example app listening at http://localhost:${port}`);
+});
