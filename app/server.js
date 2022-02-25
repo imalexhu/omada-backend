@@ -5,6 +5,7 @@ const cors = require('cors');
 const app = express();
 
 const { getUser, createUser, updateUser } = require('./routes/userRoutes')
+const { updateProject, createProject, joinProject, getProjects } = require('./routes/projectRoutes')
 
 const port = process.env.PORT;
 const url = process.env.DB_URL;
@@ -27,7 +28,7 @@ app.put('/update-project/:projectId', (req, res) => {
   }
 });
 
-app.post('/create-project/:userId', (req, res) => {
+app.post('/create-project/:userId', async (req, res) => {
   try {
     let data = createProject(req.params.userId, req.body);
     res.send({ status: 200, body: data });
@@ -72,11 +73,11 @@ app.get('/get-projects/:userId', (req, res) => {
   }
 });
 
-app.post('/create-user', (req, res) => {
-  try{
+app.post('/create-user', async (req, res) => {
+  try {
     createUser(req.body);
     res.sendStatus(200);
-  }catch{
+  } catch {
     res.send({ status: 500, message: 'Internal Server Error' });
   }
 })

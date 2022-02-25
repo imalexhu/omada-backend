@@ -1,12 +1,11 @@
-const Tags = {
-  ALL: 0,
+const Roles = {
   FRONTEND: 1,
   BACKEND: 2,
   UI: 3,
   FULLSTACK: 4,
 };
 
-Object.freeze(Tags);
+Object.freeze(Roles);
 
 const Status = {
   INPROGRESS: 1,
@@ -17,7 +16,6 @@ const Status = {
 Object.freeze(Status);
 
 const Difficulty = {
-  ALL: 0,
   EASY: 1,
   MEDIUM: 2,
   HARD: 3,
@@ -25,4 +23,4 @@ const Difficulty = {
 
 Object.freeze(Difficulty);
 
-export { Tags, Status, Difficulty };
+module.exports = { Roles, Status, Difficulty };
