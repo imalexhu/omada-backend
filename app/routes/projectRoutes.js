@@ -20,6 +20,7 @@ async function createProject(userId, data) {
     discord = getDiscordId();
     github = getGitHubId();
 
+    // creates a project
     let project = new Project(
         {
             description: data.description,
@@ -40,6 +41,8 @@ async function createProject(userId, data) {
         projectId: project._id,
         action: "Created"
     }
+
+    // updates the creator with the data
     await User.findOneAndUpdate(
         { _id: mongoose.Types.ObjectId(userId) },
         { $push: { currentProjectsCreated: project._id, projectHistory: history } },
