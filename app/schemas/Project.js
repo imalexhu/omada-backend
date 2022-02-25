@@ -1,16 +1,17 @@
 const mongoose = require("mongoose");
-// const enums = require("../../enum");
+const enums = require("../../enum");
 
 const ProjectSchema = new mongoose.Schema({
   description: {
     type: String,
+    required : true,
   },
   name: {
     type: String,
     required: true,
   },
   creator: { type: mongoose.Schema.Types.ObjectId },
-  requiredTags: { type: Map, of: Number },
+  roles: { type: Map, of: Number },
   discordLink: {
     type: String,
     required: true,
@@ -28,7 +29,7 @@ const ProjectSchema = new mongoose.Schema({
   peopleInvolved: {
     type: Number,
   },
-  participants: [{ type: Map, of: Number }],
+  participants: [{ type: Map, of: mongoose.Schema.Types.ObjectId }],
 });
 
 module.exports = mongoose.model("Project", ProjectSchema);

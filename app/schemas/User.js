@@ -1,12 +1,6 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-  },
   githubId: {
     type: String,
     required: true,
@@ -18,9 +12,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   currentProjectsCreated: [mongoose.Schema.Types.ObjectId],
-  projectHistory: {},
+  projectHistory: [],
   currentProjectsInvolved: [mongoose.Schema.Types.ObjectId],
   difficulties: [],
+  roles : [],
   profileName: {
     type: String,
     required: true,
