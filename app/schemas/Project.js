@@ -2,31 +2,20 @@ const mongoose = require("mongoose");
 const enums = require("../../enum");
 
 const ProjectSchema = new mongoose.Schema({
-  description: {
-    type: String,
-    required : true,
-  },
   name: {
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required : true,
+  },
   creator: { type: mongoose.Schema.Types.ObjectId },
-  roles: { type: Map, of: Number },
-  discordLink: {
-    type: String,
-    required: true,
-  },
-  githubLink: {
-    type: String,
-    required: true,
-  },
-  difficulty: {
-    type: Number,
-  },
+  platforms: [{
+      platform: String,
+      url: String,
+  }],
   status: {
-    type: Number,
-  },
-  peopleInvolved: {
     type: Number,
   },
   participants: [{ type: Map, of: mongoose.Schema.Types.ObjectId }],
