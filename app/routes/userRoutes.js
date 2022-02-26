@@ -7,10 +7,15 @@ async function createUser(data) {
 }
 
 async function loginUser(data) {
-    let val = await User.findOne({ email: data.email });
+    return await User.findOne({ email: data.email }) == null;
+}
+
+async function getUser(email) {
+    return await User.findOne({ email });
 }
 
 module.exports = {
     createUser,
-    loginUser
+    loginUser,
+    getUser
 }

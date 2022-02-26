@@ -1,69 +1,26 @@
-const ENUMS = require('../../enum');
 const { getDiscordId } = require('../discord/discord');
 const { getGitHubId } = require('../github/github');
 const Project = require('../schemas/Project');
 const User = require('../schemas/User');
 const mongoose = require('mongoose')
 
-
-function updateProject(id, data) {
-
-}
-
-async function createProject(userId, data) {
+async function createProject(data) {
     // building the requiredTags
-    let tags = {};
-    for (role in data.roles) {
-        tags[ENUMS.Roles[role]] = data.roles[role];
-    }
+    let project = new Project(data);
 
-    discord = getDiscordId();
-    github = getGitHubId();
-
-    // creates a project
-    let project = new Project(
-        {
-            description: data.description,
-            name: data.name,
-            creator: mongoose.Types.ObjectId(userId),
-            roles: tags,
-            discordLink: discord,
-            githubLink: github,
-            difficulty: ENUMS.Difficulty[data.difficulty],
-            status: ENUMS.Status['INPROGRESS'],
-            peopleInvolved: 1,
-            participants: {}
-        }
-    );
-
-    let history = {
-        timestamp: new Date().toLocaleString(),
-        projectId: project._id,
-        action: "Created"
-    }
-
-    // updates the creator with the data
     await User.findOneAndUpdate(
-        { _id: mongoose.Types.ObjectId(userId) },
-        { $push: { currentProjectsCreated: project._id, projectHistory: history } },
+        { _id: mongoose.Types.ObjectId(project.creator) },
+        { $push: { currentProjectsCreated: project._id } }
     ).exec();
 
     await project.save();
-
-    return { discord, github };
 }
 
-function joinProject(userId, data) {
-
-}
-
-function getProjects(userId, data) {
-
+async function getProjects(pid) {
+    return await Project.find({ _id: mongoose.Schema.Types.ObjectId(pid) });
 }
 
 module.exports = {
-    updateProject,
     createProject,
-    joinProject,
     getProjects
 }
