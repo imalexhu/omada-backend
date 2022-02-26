@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  profileName: {
+  email: {
     type: String,
     required: true,
     index: { unique: true },
+  },
+  profileName: {
+    type: String,
+    required: true,
   },
   currentProjectsCreated: [mongoose.Schema.Types.ObjectId],
   currentProjectsInvolved: [mongoose.Schema.Types.ObjectId],
