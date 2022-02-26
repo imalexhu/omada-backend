@@ -8,17 +8,20 @@ const ProjectSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required : true,
+    required: true,
   },
-  creator: { type: mongoose.Schema.Types.ObjectId },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  },
   platforms: [{
-      platform: String,
-      url: String,
+    platform: String,
+    url: String,
   }],
   status: {
-    type: Number,
+    type: String,
   },
-  participants: [{ type: Map, of: mongoose.Schema.Types.ObjectId }],
+  participants: [String],
 });
 
 module.exports = mongoose.model("Project", ProjectSchema);

@@ -5,8 +5,8 @@ const cors = require('cors');
 const app = express();
 const session = require('express-session')
 
-const { createUser, loginUser } = require('./routes/userRoutes')
-const { createProject, joinProject } = require('./routes/projectRoutes')
+const { createUser, loginUser, getUser } = require('./routes/userRoutes')
+const { createProject, getProjects } = require('./routes/projectRoutes')
 
 const port = process.env.PORT;
 const url = process.env.DB_URL;
@@ -14,7 +14,7 @@ const url = process.env.DB_URL;
 app.use(express.json());
 app.use(cors());
 // Use the session middleware
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 } }))
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 600000 } }))
 
 
 mongoose.connect(
@@ -30,6 +30,7 @@ app.post('/login', function (req, res, next) {
     res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
     res.end();
   } else {
+    console.log("gave session");
     if (loginUser(req.body)) {
       req.session.email = req.body.email;
     }
@@ -39,8 +40,16 @@ app.post('/login', function (req, res, next) {
 
 app.post('/create-project/:userId', async (req, res) => {
   try {
-    let data = createProject(req.params.userId, req.body);
+    createProject(req.body);
     res.send({ status: 200 });
+  } catch {
+    res.send({ status: 500, message: 'Internal Server Error' });
+  }
+});
+
+app.get('/get-project/:pid', async (req, res) => {
+  try {
+    return res.send({ status: 200, data: getProjects(req.params.pid) });
   } catch {
     res.send({ status: 500, message: 'Internal Server Error' });
   }
@@ -50,6 +59,14 @@ app.post('/create-user', async (req, res) => {
   try {
     createUser(req.body);
     res.sendStatus(200);
+  } catch {
+    res.send({ status: 500, message: 'Internal Server Error' });
+  }
+})
+
+app.get('/get-user/:email', async (req, res) => {
+  try {
+    return res.send({ status: 200, data: await getUser(req.params.email) });
   } catch {
     res.send({ status: 500, message: 'Internal Server Error' });
   }
