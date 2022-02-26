@@ -49,7 +49,7 @@ app.post('/create-project/:userId', async (req, res) => {
 
 app.get('/get-project/:pid', async (req, res) => {
   try {
-    return res.send({ status: 200, data: getProjects(req.params.pid) });
+    return res.send({ status: 200, data: await getProjects(req.params.pid) });
   } catch {
     res.send({ status: 500, message: 'Internal Server Error' });
   }

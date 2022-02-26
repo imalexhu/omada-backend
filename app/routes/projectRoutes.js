@@ -17,7 +17,7 @@ async function createProject(data) {
 }
 
 async function getProjects(pid) {
-    return await Project.find({ _id: mongoose.Schema.Types.ObjectId(pid) });
+    return await Project.find({ _id: mongoose.Types.ObjectId(pid) });
 }
 
 module.exports = {
