@@ -5,8 +5,8 @@ const cors = require("cors");
 const app = express();
 const session = require("express-session");
 
-const { createUser, loginUser, getUser } = require("./routes/userRoutes");
-const { createProject, getProjects } = require("./routes/projectRoutes");
+const { createUser, loginUser, getUser } = require('./routes/userRoutes')
+const { createProject, getProjects, addUser } = require('./routes/projectRoutes')
 
 const port = process.env.PORT;
 const url = process.env.DB_URL;
@@ -46,7 +46,16 @@ app.post("/create-project/:userId", async (req, res) => {
   }
 });
 
-app.get("/get-project/:pid", async (req, res) => {
+app.post('/add-user', async (req, res) => {
+  try {
+    addUser(req.body);
+    res.send({ status: 200 });
+  } catch {
+    res.send({ status: 500, message: 'Internal Server Error' });
+  }
+});
+
+app.get('/get-project/:pid', async (req, res) => {
   try {
     return res.send({ status: 200, data: await getProjects(req.params.pid) });
   } catch {

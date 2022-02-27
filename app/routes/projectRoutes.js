@@ -16,11 +16,21 @@ async function createProject(data) {
     await project.save();
 }
 
+async function addUser(data) {
+    let project = await Project.findOne({
+        _id: mongoose.Types.ObjectId(data._id)
+    });
+    project.participants.push(data.email);
+
+    await project.save();
+}
+
 async function getProjects(pid) {
     return await Project.find({ _id: mongoose.Types.ObjectId(pid) });
 }
 
 module.exports = {
     createProject,
-    getProjects
+    getProjects,
+    addUser
 }
