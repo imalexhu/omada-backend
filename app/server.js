@@ -6,7 +6,7 @@ const app = express();
 const session = require('express-session')
 
 const { createUser, loginUser, getUser } = require('./routes/userRoutes')
-const { createProject, getProjects } = require('./routes/projectRoutes')
+const { createProject, getProjects, addUser } = require('./routes/projectRoutes')
 
 const port = process.env.PORT;
 const url = process.env.DB_URL;
@@ -41,6 +41,15 @@ app.post('/login', function (req, res, next) {
 app.post('/create-project/:userId', async (req, res) => {
   try {
     createProject(req.body);
+    res.send({ status: 200 });
+  } catch {
+    res.send({ status: 500, message: 'Internal Server Error' });
+  }
+});
+
+app.post('/add-user', async (req, res) => {
+  try {
+    addUser(req.body);
     res.send({ status: 200 });
   } catch {
     res.send({ status: 500, message: 'Internal Server Error' });
