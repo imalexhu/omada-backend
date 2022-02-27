@@ -49,12 +49,23 @@ app.post('/create-project/:userId', async (req, res) => {
 
 app.post('/add-user', async (req, res) => {
   try {
+    
     addUser(req.body);
     res.send({ status: 200 });
   } catch {
     res.send({ status: 500, message: 'Internal Server Error' });
   }
 });
+
+// stubbed for demo
+app.get('/get-project-stub', async (req, res) => {
+  try {
+    return res.send({ status: 200, data: await getProjects('621ad8a6012addbcfe15e578') });
+  } catch {
+    res.send({ status: 500, message: 'Internal Server Error' });
+  }
+});
+
 
 app.get('/get-project/:pid', async (req, res) => {
   try {
